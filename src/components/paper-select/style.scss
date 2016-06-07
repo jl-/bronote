@@ -1,0 +1,43 @@
+@import 'styles/configs';
+.paper-select {
+  display: inline-block;
+  position: relative;
+  &-trigger {
+    position: relative;
+    cursor: pointer;
+    .paper-select-option.paper-select-option--selected:hover {
+      background-color: white;
+    }
+    .paper-select-caret {
+      display: inline-block;
+    }
+  }
+  &__option {
+    display: block;
+    cursor: pointer;
+    &:hover {
+      background-color: $white--light-grey;
+    }
+  }
+  &-content {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.14), 0 2px 4px 1px rgba(0, 0, 0, 0.12), 0 3px 2px -1px rgba(0, 0, 0, 0.2);
+  }
+  &--active &-trigger {
+    visibility: hidden;
+  }
+  &--inactive &-content {
+    display: none;
+  }
+  &__caret {
+    position: absolute;
+    top: 0.8em;
+    right: 0.8em;
+  }
+}

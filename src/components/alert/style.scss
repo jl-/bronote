@@ -1,0 +1,61 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+$ctrl-variants: (
+  info: ($btn_color--primary, $btn_bgc--primary, $btn_border-color--primary),
+  success: ($btn_color--success, $btn_bgc--success, $btn_border-color--success)
+);
+
+.ralert {
+  &-root {
+  }
+  position: fixed;
+  left: 0; top: 0;
+  right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1000;
+  @include flex-box($justify-content: center, $align-items: center);
+  &-inner {
+    background-color: white;
+    border-radius: 5px;
+    padding: 1em;
+  }
+  &__title {
+    text-align: center;
+    font-size: 2em;
+    color: #575757;
+  }
+  &__content {
+    font-size: 1em;
+    color: #797979;
+    font-weight: 300;
+    text-align: inherit;
+  }
+  &__ctrls {
+    margin-top: 2em;
+    padding: 0.2em;
+    text-align: center;
+  }
+  &__ctrl-cancel, &__ctrl-confirm {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    @include button-size-variant($btn_padding, $btn_font-size, $btn_line-height, $btn_border-radius);
+  }
+  &__ctrl-cancel + &__ctrl-confirm {
+    margin-left: 2em;
+  }
+
+  // type: info, success, warning, error
+  @each $variant, $params in $ctrl-variants {
+    &--#{$variant} &__ctrl-confirm {
+      @include button-variant(nth($params, 1), nth($params, 2), nth($params, 3));
+    }
+  }
+}

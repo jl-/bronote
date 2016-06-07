@@ -1,0 +1,14 @@
+@import 'styles/mixins';
+.main {
+  compose-with: global(frow) global(f-jc-sb) global(f-ai-s) global(rel) global(h--full) global(x--clip) global(y--clip);
+  height: calc(100% - #{$global-action-bar_height});
+}
+.rootCtrl {
+  compose-with: global(v--full);
+  @include flex-item(1);
+}
+.workspace {
+  compose-with: global(v--full);
+  @include flex-item(4);
+}
+

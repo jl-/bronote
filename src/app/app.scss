@@ -1,0 +1,19 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.app {
+  compose-with: global(rel) global(h--full) global(v--full) global(x--clip) global(y--clip);
+  @include color-variant(darken(black, 1%), lighten(darken(#f5f7fa, 1%), 4%));
+}
+
+:global {
+  .redal {
+    &--entering {
+      animation: fade-in both ease;
+      animation-duration: $redal-duration;
+    }
+    &--leaving {
+      animation: fade-out both ease;
+      animation-duration: $redal-duration;
+    }
+  }
+}

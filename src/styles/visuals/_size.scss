@@ -1,0 +1,23 @@
+/* ====================================
+ * handy width|height helpers
+ * ===================================== */
+.h--full {
+  width: 100%;
+}
+.v--full {
+  height: 100%;
+}
+@each $val in (100,200,300,400,500,600,700,800,900,bolder,bold,lighter,normal,inherit,initial) {
+  .fw--#{$val} {
+    font-weight: $val;
+  }
+}
+.t--lg {
+  font-size: 120%;
+}
+.t--md {
+  font-size: 86%;
+}
+.t--sm {
+  font-size: 76%;
+}

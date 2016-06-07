@@ -1,0 +1,39 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.root {
+  compose-with: global(btn-group);
+}
+.btn {
+  compose-with: global(btn) global(btn--xs);
+  @include color-variant(null, lighten($grey--light, 8%));
+}
+.btn:global(.btn) {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 1;
+}
+
+.dropdown {
+  compose-with: btn;
+  &Trigger {
+    compose-with: btn;
+  }
+}
+.dropdown:global(.btn) {
+  padding-left: 0;
+  padding-right: 0;
+}
+.dropdownTrigger:global(.btn) {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.dropdownContent {
+  compose-with: global(list) global(list--flat);
+  @include color-variant(black, lighten($grey--light, 8%));
+}
+.action {
+  compose-with: btn;
+  &:global(.btn) {
+    display: list-item;
+  }
+}

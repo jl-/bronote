@@ -1,0 +1,40 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.tags-box {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  &__tag {
+    position: relative;
+    border-radius: 0.2em;
+    padding: 0.2em 0.4em;
+    margin-right: 0.4em;
+    line-height: 1;
+    font-size: 0.9em;
+    @include color-variant(white, $brand--primary);
+    &-x {
+      margin-left: 0.3em;
+      cursor: pointer;
+      font-size: 0.9em;
+      &:hover {
+      }
+    }
+  }
+}
+.tags-box,
+.tags-box__tag,
+.tag-input {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tag-input {
+  border: none;
+  outline: none;
+}
+
+.tags-editor {
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 3px;
+}

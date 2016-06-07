@@ -1,0 +1,25 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.root {
+  compose-with: global(rel) global(m-x--o) global(m-y--xs);
+  @include size(12em, 13em);
+  @include color-variant(white, $brand--primary);
+  border-top-left-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  border-top-right-radius: 0.6em;
+  border-bottom-right-radius: 0.6em;
+  &::before, &::after {
+    position: absolute;
+    content: "";
+    height: 2em;
+    width: 2px;
+    background: red;
+    left: -2px;
+  }
+  &::before {
+    top: 1em;
+  }
+  &::after {
+    bottom: 1em;
+  }
+}

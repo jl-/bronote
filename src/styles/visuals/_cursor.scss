@@ -1,0 +1,17 @@
+.cursor{
+  &--pointer {
+    cursor: pointer;
+  }
+  &--disabled {
+    cursor: not-allowed;
+  }
+  &--text {
+    cursor: text;
+  }
+  &--auto {
+    cursor: auto;
+  }
+}
+.event-disabled {
+  pointer-events: none;
+}

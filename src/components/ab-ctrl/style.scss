@@ -1,0 +1,71 @@
+@import 'styles/mixins';
+@mixin ctrl-variant() {
+  position: relative;
+  &-trigger {
+    cursor: pointer;
+  }
+  &-content {
+    position: absolute;
+    border-radius: 0.2em;
+    padding: 0.4em 0;
+    z-index: 10;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .25), 0 0 1px rgba(0,0,0,0.37);
+    white-space: nowrap;
+    &--bc {
+      min-width: 100%;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%,0);
+    }
+    &--br {
+      right: 0;
+    }
+    &--bl {
+    }
+    &--tc {
+      bottom: 100%;
+      left: 50%;
+      transform: translate(-50%,0);
+    }
+    &--tr {
+    }
+    &--tl {
+    }
+    &--lc {
+      right: 100%;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &--rc {
+      left: 100%;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
+
+  &--inactive &-content{
+    display: none;
+  }
+
+  &--light &-content{
+    @include color-variant($background-color: white);
+  }
+}
+.ab-ctrl {
+  @include ctrl-variant();
+}
+.dropdown {
+  @include ctrl-variant();
+  &-content {
+    &--bc, &--br, &--bl {
+      margin-top: 2px;
+    }
+  }
+}
+.popup {
+  @include ctrl-variant();
+}
+.tooltip {
+  @include ctrl-variant();
+}
+

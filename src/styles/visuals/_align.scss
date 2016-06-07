@@ -1,0 +1,10 @@
+@each $type in (left, right, center, justify) {
+  .ta--#{$type} {
+    text-align: $type;
+  }
+}
+@each $type in (middle, top, bottom) {
+  .va--#{$type} {
+    vertical-align: $type;
+  }
+}

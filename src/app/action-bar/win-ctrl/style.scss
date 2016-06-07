@@ -1,0 +1,36 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+$btn_size: 12px;
+$ctrl-btns: (
+  close:      #FF5F52 #E33E32 'close.png',
+  minimize:   #FFBE05 #E2A100 'minimize.png',
+  fullscreen: #15CC35 #17B230 'fullscreen.png'
+);
+
+
+.root {
+  compose-with: global(p-x--sm) global(ifrow) global(f-jc-sb) global(f-ai-c) global(p-y--sm);
+}
+
+.btn {
+  @include size($btn_size);
+  border-radius: 50%;
+  background-position: center;
+  & + & {
+    margin-left: 8px;
+  }
+}
+@each $btn-name, $btn-conf in $ctrl-btns {
+  .#{$btn-name} {
+    compose-with: btn;
+    @include color-variant(null, nth($btn-conf, 1), nth($btn-conf, 2));
+    background-size: 10px 10px;
+  }
+  .root:hover .#{$btn-name} {
+    background-image: url(#{$ROOT}/statics/images/#{nth($btn-conf, 3)});
+  }
+  .root:hover .fullscreen.fullscreenClose {
+    background-image: url(#{$ROOT}/statics/images/fullscreenclose.png);
+  }
+}
+

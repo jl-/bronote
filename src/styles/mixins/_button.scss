@@ -1,0 +1,33 @@
+@import './color';
+@import './form-control';
+@mixin button-variant($color, $background-color, $border-color) {
+  @include color-variant($color, $background-color, $border-color);
+
+  $background-color--actived: darken($background-color, 10%);
+  $border-color--actived: darken($border-color, 12%);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.#{btn--actived} {
+    @include color-variant($color, $background-color--actived, $border-color--actived);
+  }
+}
+
+@mixin button-outline-variant($color) {
+  @include color-variant($color, transparent, $color);
+  background-image: none;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:active,
+  &.#{btn--actived} {
+    @include color-variant(#fff, $color, $color);
+    outline: none;
+  }
+}
+
+@mixin button-size-variant($padding, $font-size, $line-height, $border-radius) {
+  @include form-control-size-variant($padding, $font-size, $line-height, null, $border-radius);
+}

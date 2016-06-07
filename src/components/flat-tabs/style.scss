@@ -1,0 +1,17 @@
+.flat-tabs {
+}
+.flat-tabs__ctrls {
+  padding-left: 0;
+  margin: 0;
+}
+.flat-tabs__ctrl {
+  display: inline-block;
+  padding: 0.4em 1.2em;
+  cursor: pointer;
+}
+.flat-tabs__content {
+  display: none;
+  &--active#{&} {
+    display: block;
+  }
+}

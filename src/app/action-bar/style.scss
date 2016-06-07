@@ -1,0 +1,9 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.root {
+  compose-with: global(frow) global(f-jc-fe) global(f-ai-c) global(p-x--sm);
+  @include row($global-action-bar_height, null);
+  @include color-variant(null, darken($grey--light, 5%));
+  background-image: linear-gradient(to bottom, rgb(230,228,230), rgb(214,212,214));
+  -webkit-app-region: drag;
+}

@@ -1,0 +1,74 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+@import 'styles/modules/list';
+@import 'styles/visuals/box-model';
+@import 'styles/visuals/cursor';
+@import 'styles/modules/link';
+@import 'styles/modules/flex';
+$radius: 0.3em;
+$ctrl_bgc: $grey--pale;
+$ctrl-body_bgc: white;
+.tab-ctrl {
+  @extend .fcol;
+  position: relative;
+  color: $body_bgc;
+  overflow: hidden;
+  &__description {
+    @extend .p-x--md;
+    @extend .p-y--md;
+    @extend .m-y--0;
+    font-size: 13px;
+    line-height: 1.6;
+    background-color: $ctrl_bgc;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+  }
+  &__ctrl {
+    @extend .list;
+    @extend .list--row;
+    @extend .m-y--0;
+    @extend .p-x--md;
+    background-color: $ctrl_bgc;
+    &-item {
+      @extend .m-r--sm;
+      border-top-left-radius: $radius;
+      border-top-right-radius: $radius;
+      &-link {
+        @extend .link;
+        @extend .p-x--lg;
+        @extend .p-y--sm;
+        @extend .cursor--pointer;
+        display: block;
+        background-color: darken($ctrl_bgc, 10%);
+        color: $body_bgc;
+        border-top-left-radius: 0.3em;
+        border-top-right-radius: 0.3em;
+        &:hover {
+          background-color: darken($ctrl_bgc, 16%);
+        }
+      }
+      &--active &-link {
+        background-color: $ctrl-body_bgc;
+        &:hover {
+          background-color: $ctrl-body_bgc;
+        }
+      }
+    }
+    // vertical, sub
+    &-sub &-item {
+      margin-right: 0;
+    }
+    &-sub .paper-select-content &-item{
+      &-link {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  }
+  &__body {
+    @include flex-item(1);
+    @extend .fcol;
+    background-color: $ctrl-body_bgc;
+    overflow: auto;
+  }
+}

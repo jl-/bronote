@@ -1,0 +1,13 @@
+@mixin form-control-focus() {
+  &:focus {
+    @content;
+  }
+}
+
+@mixin form-control-size-variant($padding: null, $font-size: null, $line-height: null, $height:null, $border-radius: null) {
+  font-size: $font-size;
+  line-height: $line-height;
+  padding: $padding;
+  height: $height;
+  border-radius: $border-radius;
+}

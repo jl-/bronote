@@ -1,0 +1,13 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.thumb {
+  border-radius: 0.4em;
+  @each $size, $value in $thumb-size-variants {
+    &--#{$size} {
+      @include size(nth($value, 1));
+    }
+  }
+  &--round {
+    border-radius: 50%;
+  }
+}
