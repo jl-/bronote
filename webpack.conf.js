@@ -58,12 +58,13 @@ const UGLIFYJS_CONF = {
   }
 };
 
-const nodeModules = {};
-fs.readdirSync('node_modules')
+const nodeModules = fs.readdirSync('node_modules')
   .filter(x => ['.bin', '.DS_Store'].indexOf(x) === -1)
-  .forEach(mod => {
-    nodeModules[mod] = `commonjs ${mod}`;
-  });
+  .reduce((res, mod) => {
+    /* eslint no-param-reassign: 0 */
+    res[mod] = `commonjs ${mod}`;
+    return res;
+  }, {});
 
 const targetNode = {
   console: false,
@@ -76,8 +77,8 @@ const targetNode = {
 };
 
 const WEBPACK_RESOLVE = {
-  extensions: ['', '.js', '.jsx', 'css', 'scss'],
-  modulesDirectories: ['node_modules'],
+  extensions: ['', '.js', '.jsx', '.css', '.scss', '.json'],
+  modulesDirectories: ['node_modules', 'web_modules'],
   alias: {
     libs: PATHS.LIBS,
     utils: PATHS.UTILS,
@@ -87,7 +88,7 @@ const WEBPACK_RESOLVE = {
     partials: PATHS.PARTIALS,
     components: PATHS.REACT_COMPONENTS,
     configs: path.resolve(PATHS.SRC, 'configs')
-  }
+  },
 };
 const DEFAULT_OUTPUT = {
   filename: '[name].bundle.js',
@@ -95,7 +96,7 @@ const DEFAULT_OUTPUT = {
   chunkFilename: '[name].chunk.js',
   // publicPath: isDev ? PATHS.PUBLIC : DOMAIN_STATICS,
   // publicPath: PATHS.PUBLIC,
-  libraryTarget: 'commonjs2'
+  libraryTarget: 'umd',
 };
 
 function addDevServerEntry(entry) {
@@ -150,8 +151,12 @@ function configLoaders(conf, { isDev }) {
   }, {
     test: /\.json$/,
     loader: 'json'
+  }, {
+    test: /\.md$/,
+    loader: 'html!markdown'
   });
   conf.postcss = postcssHook;
+  module.noParse = /node_modules\/json-schema\/lib\/validate\.js/;
 
   return conf;
 }
@@ -168,6 +173,7 @@ function makePlugins(lang, { isDev, isTest, common, html }) {
     __I18N_LANG__: JSON.stringify(lang),
     __MOMENT_LOCALE__: JSON.stringify(MOMENT_LOCALE_MAP[lang] || 'en'),
     'process.env': {
+      /* eslint no-nested-ternary: 0 */
       NODE_ENV: JSON.stringify(isDev ? 'development' : isTest ? 'test' : 'production')
     }
   });
