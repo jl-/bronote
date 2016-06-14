@@ -15,14 +15,14 @@ class PaperFormControl extends Component {
     this.handleBlur = ::this.handleBlur;
     this.handleChange = ::this.handleChange;
   }
-  handleFocus(){
+  handleFocus() {
     let status = this.state.status;
     if (this.getValue().length === 0 && status & STATUS.PRISTINE) {
       status = status & ~STATUS.PRISTINE | STATUS.BLANK;
     }
     this.setState({ status: status | STATUS.FOCUSED });
   }
-  handleBlur(){
+  handleBlur() {
     let status = this.state.status & (~STATUS.FOCUSED);
     if (!(status & STATUS.INVALID) && this.getValue().length === 0) status |= STATUS.BLANK;
     this.setState({ status });
@@ -68,26 +68,31 @@ class PaperFormControl extends Component {
       [`${base}--bare`]: bare
     }, base);
   }
-  validate(){
+  validate(callback) {
     const { validator } = this.props;
-    if(typeof validator !== 'function') return;
+    if (typeof validator !== 'function') return;
 
     clearTimeout(this._timer);
     this._timer = setTimeout(() => {
-      let res = validator.call(this, this.getValue());
+      const value = this.getValue();
+      const res = validator.call(this, value);
       if (res && typeof res.then === 'function') {
         this.setState({ status: this.state.status | STATUS.PENDING });
         res.then(() => {
           this.setError(null);
+          (typeof callback === 'function') && callback(value);
         }, error => {
           this.setError(error);
+          (typeof callback === 'function') && callback();
         });
       } else {
-        this.setError(res === true ? null : res || ' ');
+        const error = res === true ? null : res || '';
+        this.setError(error);
+        (typeof callback === 'function') && callback(error ? undefined : value);
       }
     }, VALIDATE_TIMEOUT);
   }
-  render(){
+  render() {
     return null;
   }
 }

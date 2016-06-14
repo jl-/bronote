@@ -16,9 +16,10 @@ class PaperInput extends PaperFormControl {
   constructor(props, context) {
     super(props, context, 'input');
   }
-  getValue(onlyIfValid =  false) {
-    const value = this.refs[FIELD_REF].value;
-    return !onlyIfValid || (this.state.status & STATUS.VALID) ? value : undefined;
+  // callback to trigger a validation
+  getValue(callback = null) {
+    if (typeof callback !== 'function') return this.refs[FIELD_REF].value;
+    this.validate(callback);
   }
   setValue(value) {
     const field = this.refs[FIELD_REF];
@@ -35,11 +36,11 @@ class PaperInput extends PaperFormControl {
     if (e) e.preventDefault();
   }
   render() {
-    const { type, label, hint, placeholder, className, validator, trigger, prefix, suffix, ...props } = this.props;
+    const { type, label, hint, placeholder, withUnderline = true, className, validator, trigger, prefix, suffix, ...props } = this.props;
     const { status, error } = this.state;
     const labelEl = label ? <label className='paper-input-label'>{label}</label> : null;
-    const hintEl = hint ? <span className='paper-input-info'>{error || hint}</span> : null;
-    const underlineEl = <span className='paper-input-underline'></span>;
+    const hintEl = hint || error ? <span className='paper-input-info'>{error || hint}</span> : null;
+    const underlineEl = withUnderline && <span className='paper-input-underline'></span>;
     const rich = !!(prefix || suffix);
     const border = rich ? <span className='paper-input-border'></span> : null;
     if (!labelEl) props.placeholder = placeholder;
@@ -61,8 +62,7 @@ class PaperInput extends PaperFormControl {
           'frow f-ai-c paper-input--rich': rich,
           'paper-input--with-label': !!labelEl,
           'paper-input--with-info': !!hintEl
-          }, this.statusify(!label)
-        )}
+        }, this.statusify(!label))}
       >
         {prefix}
         {labelEl}

@@ -112,8 +112,10 @@ $color--invalid: $brand--danger;
   &--valid &-underline {
     background-color: $color--valid;
   }
-  &--invalid {
+  &--invalid,
+  &--invalid &-field {
     color: $color--invalid;
+    border-color: $color--invalid;
   }
   &--invalid &-underline {
     background-color: $color--invalid;
