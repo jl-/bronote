@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
-// import WinCtrl from './win-ctrl';
 import SearchCtrl from './search-ctrl';
-import CreateNoteBtn from './create-note';
 import styles from './style.scss';
 
 class GlobalActionBar extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.createNotebook = ::this.createNotebook;
+  }
+  createNotebook() {
+    this.props.actions.openNotebookEditor();
+  }
   render() {
-    const { ...props } = this.props;
+    const { actions, ...props } = this.props;
     props.className = cx(props.className, styles.root);
     return (
       <div {...props}>
-        <CreateNoteBtn className='m-r--sm' />
+        <button className={styles.createNotebookBtn} onClick={this.createNotebook}>
+          <i className='icon icon-plus' />
+          {__('app.notebooks.phrases.createNotebook')}
+        </button>
         <SearchCtrl />
       </div>
     );

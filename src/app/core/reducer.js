@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import sources from '../../modules/sources/reducer';
-import folders from '../../modules/folders/reducer';
+import notebooks from 'modules/notebooks/reducers/notebooks';
+import notebook from 'modules/notebooks/reducers/notebook';
+import app from 'modules/app/reducer';
 
 const reducer = combineReducers({
-  sources, folders
+  app, notebooks, notebook,
 });
 
 export default reducer;

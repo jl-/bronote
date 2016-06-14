@@ -1,9 +1,6 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from '../../middlewares/thunk';
-
-const finalCreateStore = compose(
-  applyMiddleware(thunk)
-  //, typeof window === 'object' && typeof window.devToolsExtension === 'function' ? window.devToolsExtension() : f => f
-)(createStore);
-
-export default finalCreateStore;
+/* eslint global-require: 0 */
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./create-store.prod');
+} else {
+  module.exports = require('./create-store.dev');
+}

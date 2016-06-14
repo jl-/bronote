@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 import styles from './style.scss';
 
-class RootCtrl extends Component {
+class NotebookChapterPagesCtrl extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -16,4 +16,5 @@ class RootCtrl extends Component {
   }
 }
 
-export default RootCtrl;
+export default NotebookChapterPagesCtrl;
+

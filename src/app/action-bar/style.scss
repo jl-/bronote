@@ -7,3 +7,17 @@
   background-image: linear-gradient(to bottom, rgb(230,228,230), rgb(214,212,214));
   -webkit-app-region: drag;
 }
+
+.btn {
+  compose-with: global(btn) global(btn--xs);
+  @include color-variant(null, lighten($grey--light, 8%));
+}
+.btn:global(.btn) {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 1;
+}
+
+.createNotebookBtn {
+  compose-with: btn global(m-r--sm);
+}
