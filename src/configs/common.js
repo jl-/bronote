@@ -1,2 +1,2 @@
-export const REDAL_DURATION = 600;
+export const REDAL_DURATION = 400;
 
