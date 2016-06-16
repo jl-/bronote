@@ -13,9 +13,7 @@ export function createNotebook(notebook) {
 }
 
 export function fetchNotebooks() {
-  return db.find({
-    selector: {
-      _id: { $gte: NOTEBOOK_DOC_PREFIX }
-    },
+  return db.allDocs({
+    include_docs: true
   });
 }

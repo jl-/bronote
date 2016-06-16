@@ -156,7 +156,7 @@ function configLoaders(conf, { isDev }) {
     loader: 'html!markdown'
   });
   conf.postcss = postcssHook;
-  module.noParse = /node_modules\/json-schema\/lib\/validate\.js/;
+  // module.noParse = /node_modules\/json-schema\/lib\/validate\.js/;
 
   return conf;
 }
