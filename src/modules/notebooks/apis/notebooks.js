@@ -24,7 +24,7 @@ export async function fetchNotebooks() {
   const notebookTable = db.getSchema().table(TBN_NOTEBOOK);
   return await db.select()
     .from(notebookTable)
-    .where(notebookTable.id.gte(3))
+    //.where(notebookTable.id.gte(3))
     .orderBy(notebookTable.id, lf.Order.DESC)
     .exec();
 }

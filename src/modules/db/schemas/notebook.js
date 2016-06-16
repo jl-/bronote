@@ -6,6 +6,6 @@ export default function buildNotebookSchema(schemaBuilder) {
     .addColumn('name', lf.Type.STRING)
     .addColumn('created_at', lf.Type.DATE_TIME)
     .addColumn('updated_at', lf.Type.DATE_TIME)
-    .addPrimaryKey(['id'], true)
-    .addNullable(['updated_at']);
+    .addNullable(['updated_at'])
+    .addPrimaryKey(['id'], true);
 }

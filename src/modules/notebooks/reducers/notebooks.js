@@ -2,7 +2,7 @@ import ACTION_TYPES from '../action-types';
 import STATUS from '../status';
 
 const initState = {
-  list: [],
+  all: [],
   editing: null,
 };
 

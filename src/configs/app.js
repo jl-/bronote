@@ -16,4 +16,6 @@ export const CHANNELS = {
 export const DB_NAME = 'Bronote';
 export const DB_VERSION = 1;
 export const TBN_NOTEBOOK = 'Notebook';
+export const TBN_CHAPTER = 'Chapter';
+export const TBN_PAGE = 'Page';
 
