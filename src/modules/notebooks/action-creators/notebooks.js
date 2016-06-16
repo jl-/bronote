@@ -13,9 +13,10 @@ export function closeNotebookEditor() {
 export function submitNotebook(notebook) {
   const isNew = !notebook.id;
   const type = ACTION_TYPES[isNew ? 'CREATE_NOTEBOOK' : 'EDIT_NOTEBOOK'];
+  const api = isNew ? notebookApi.createNotebook : notebookApi.updateNotebook;
   return (dispatch, getState) => {
     dispatch({ type, payload: notebook });
-    return notebookApi.createNotebook(notebook).then(res => {
+    return api(notebook).then(res => {
       console.log(res);
     });
   };
