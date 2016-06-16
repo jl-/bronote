@@ -40,7 +40,7 @@
     "del": "^2.2.0",
     "devtron": "^1.1.2",
     "electron-debug": "^1.0.0",
-    "electron-prebuilt": "^1.2.1",
+    "electron-prebuilt": "^1.2.3",
     "eslint": "^2.11.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.1",
