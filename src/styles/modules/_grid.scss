@@ -1,7 +1,0 @@
-@import 'styles/mixins';
-.row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-@include make-grid-cols();

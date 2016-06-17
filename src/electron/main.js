@@ -1,6 +1,5 @@
-import electron from'electron';
+import electron from 'electron';
 import bindProtocolHandler from './protocol';
-import initIPC from './ipc';
 import path from 'path';
 import {
   DEFAULT_WIN_CONF
@@ -29,10 +28,9 @@ function onAppReady() {
   const appWin = createWindow(APP_WIN_NAME, DEFAULT_WIN_CONF);
   const appURL = process.env.NODE_ENV === 'development' ?
     'http://localhost:3005/main' :
-  `file://dist/${__I18N_LANG__}/index.html`;
+  `file://dist/index.html`;
   bindProtocolHandler();
   appWin.loadURL(appURL);
-  initIPC();
   tryDevTools(appWin);
 }
 

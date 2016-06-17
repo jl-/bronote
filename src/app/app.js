@@ -1,8 +1,7 @@
-import React, { Component, cloneElement } from 'react';
+import React, { Component } from 'react';
 
 class App extends Component {
   render() {
-    const { children, actions } = this.props;
     return (
       <div>
       </div>

@@ -1,9 +1,0 @@
-export { default as ktv }           from './lib/ktv';
-export { default as resolveVal }    from './lib/resolveVal';
-export { default as throttle }      from './lib/throttle';
-export { default as uid }           from './lib/uid';
-export { default as validator }     from './lib/validator';
-export { default as domContains }   from './lib/domContains';
-export { default as templatifyURL } from './lib/templatifyUrl';
-export { default as spreadObject }  from './lib/spreadObject';
-export { default as linkFuncs }     from './lib/linkFuncs';

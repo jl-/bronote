@@ -1,6 +1,0 @@
-{
-  "name": "Mask",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./mask.js"
-}

@@ -1,15 +1,7 @@
-import uid from 'utils/lib/uid';
-import ktv from 'utils/lib/ktv';
+const ACTION_TYPES = {
+  FETCH_NOTEBOOKS: 1,
+  FETCH_NOTEBOOKS_OK: 2,
+  FETCH_NOTEBOOKS_FAILED: 3
+};
 
-const ACTIONS = [
-  'SHOW_NOTEBOOK_EDITOR',
-  'HIDE_NOTEBOOK_EDITOR',
-  'CREATE_NOTEBOOK',
-  'EDIT_NOTEBOOK',
-
-  'FETCH_NOTEBOOKS',
-  'FETCH_NOTEBOOKS_OK',
-  'FETCH_NOTEBOOKS_FAILED'
-];
-
-export default ktv(ACTIONS, uid);
+export default ACTION_TYPES;
