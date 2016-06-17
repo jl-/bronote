@@ -68,8 +68,8 @@ const webpackDevConf = {
     }, {
       test: /\.md$/,
       loader: 'html!markdown'
-    }]
-    // , module.noParse = /node_modules\/json-schema\/lib\/validate\.js/;
+    }],
+    // noParse: /node_modules\/json-schema\/lib\/validate\.js/
   }
 };
 
