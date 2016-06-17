@@ -1,4 +1,5 @@
 import NOTEBOOK_ACTION_TYPES from 'modules/notebooks/action-types';
+import mergeItemToHolder from 'utils/lib/mergeItemToHolder';
 
 const initState = {
   notebooks: {},
@@ -6,7 +7,17 @@ const initState = {
   pages: {}
 };
 
+function fetchNotebooksOk(state, res) {
+  if (!Array.isArray(res) || res.length === 0) return state;
+  const notebooks = { ...state.notebooks };
+  res.forEach(notebook => {
+    mergeItemToHolder(notebooks, notebook.id, notebook);
+  });
+  return { ...state, notebooks };
+}
+
 const handlersHolder = {
+  [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOKS_OK]: fetchNotebooksOk,
 };
 
 function sources(state = initState, action) {

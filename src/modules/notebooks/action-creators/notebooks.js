@@ -21,11 +21,12 @@ export function submitNotebook(notebook) {
     });
   };
 }
+
 export function fetchNotebooks() {
   return (dispatch, getState) => {
     dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS });
     return notebookApi.fetchNotebooks().then(res => {
-      console.log(res);
+      dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS_OK, payload: res });
     });
   };
 }

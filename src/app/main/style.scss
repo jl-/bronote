@@ -3,9 +3,16 @@
   compose-with: global(rel) global(h--full) global(x--clip) global(y--clip);
   height: calc(100% - #{$global-action-bar_height});
 }
-.chaptersCtrl {
-  compose-with: global(h--full);
+.mainCtrl {
+  compose-with: global(h--full) global(frow) global(f-ai-s);
   height: $main__root-ctrl_height;
+}
+.chaptersCtrl {
+  compose-with: global(v--full);
+  @include flex-item(1);
+}
+.notebooksSelector {
+  compose-with: global(v--full);
 }
 .workspace {
   compose-with: global(h--full) global(frow) global(f-jc-sb) global(f-ai-s) global(rel);

@@ -7,7 +7,7 @@ class NotebookChaptersCtrl extends Component {
     super(props, context);
   }
   render() {
-    const { actions, ...props } = this.props;
+    const { actions, notebook, workspace, ...props } = this.props;
     props.className = cx(props.className, styles.root);
     return (
       <div {...props}>

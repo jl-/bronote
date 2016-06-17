@@ -4,7 +4,7 @@ import buildNotebookSchema from './schemas/notebook';
 import buildChapterSchema from './schemas/chapter';
 import buildPageSchema from './schemas/page';
 
-indexedDB.deleteDatabase(DB_NAME);
+// indexedDB.deleteDatabase(DB_NAME);
 
 const schemaBuilder = lf.schema.create(DB_NAME, DB_VERSION);
 buildNotebookSchema(schemaBuilder);

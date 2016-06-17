@@ -1,0 +1,9 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.root {
+  @include color-variant(null, #263238);
+}
+.current {
+  compose-with: global(v--full) global(ifrow) global(va--middle);
+}
+
