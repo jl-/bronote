@@ -1,10 +1,20 @@
+import NOTEBOOK_ACTION_TYPES from 'modules/notebooks/action-types';
+
 const initState = {
-  notebookId: null,
-  chapterId: null,
-  pageId: null
+  notebookId: JSON.parse(localStorage.getItem('notebookId')),
+  chapterId: JSON.parse(localStorage.getItem('chapterId')),
+  pageId: JSON.parse(localStorage.getItem('pageId'))
 };
 
+function createNotebookOk(state, res) {
+  return {
+    notebookId: res.id
+  };
+}
+
 const handlersHolder = {
+  [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
+
 };
 
 function workspace(state = initState, action) {

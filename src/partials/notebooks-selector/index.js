@@ -10,25 +10,27 @@ class NotebooksSelector extends Component {
   renderNotebooks(ids, { notebooks }) {
     const itemsList = ids.map(id => {
       return (
-        <li key={id}>
-        {notebooks[id].name}
+        <li key={id} className={styles.item}>
+          {notebooks[id].name}
         </li>
       );
     });
-    return <ul>{itemsList}</ul>;
+    return <ul className={styles.list}>{itemsList}</ul>;
   }
   render() {
-    const { actions, notebooks, notebook, sources, workspace, ...props } = this.props;
-    console.log(this.props);
+    const { actions, notebooks, sources, workspace, ...props } = this.props;
+    const notebook = sources.notebooks[workspace.notebookId];
+    if (!notebook) return null;
+
     props.className = cx(props.className, styles.root);
     return (
       <Dropdown {...props}>
-        <Dropdown.Trigger className={styles.current}>
-          <span>
-          hello
-          </span>
+        <Dropdown.Trigger className={styles.trigger}>
+          <i className={styles.bookIcon} />
+          <span className={styles.bookName}>{notebook.name}</span>
+          <i className={styles.triggerIcon} />
         </Dropdown.Trigger>
-        <Dropdown.Content align='bc' className='h--full'>
+        <Dropdown.Content align='bl'>
           {this.renderNotebooks(notebooks, sources)}
         </Dropdown.Content>
       </Dropdown>

@@ -16,7 +16,13 @@ function fetchNotebooksOk(state, res) {
   return { ...state, notebooks };
 }
 
+function createNotebookOk(state, res) {
+  const notebooks = mergeItemToHolder({ ...state.notebooks }, res.id, res);
+  return { ...state, notebooks };
+}
+
 const handlersHolder = {
+  [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOKS_OK]: fetchNotebooksOk,
 };
 

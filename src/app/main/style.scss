@@ -4,15 +4,16 @@
   height: calc(100% - #{$global-action-bar_height});
 }
 .mainCtrl {
-  compose-with: global(h--full) global(frow) global(f-ai-s);
+  compose-with: global(h--full) global(frow) global(f-ai-s) global(p-x--md);
+  @include color-variant(null, #263238);
   height: $main__root-ctrl_height;
 }
 .chaptersCtrl {
   compose-with: global(v--full);
   @include flex-item(1);
 }
-.notebooksSelector {
-  compose-with: global(v--full);
+.notebooksSelector :global(.dropdown-trigger) {
+  @include row($main__root-ctrl_height);
 }
 .workspace {
   compose-with: global(h--full) global(frow) global(f-jc-sb) global(f-ai-s) global(rel);

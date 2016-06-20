@@ -1,9 +1,29 @@
 @import 'styles/configs';
 @import 'styles/mixins';
 .root {
-  @include color-variant(null, #263238);
+  compose-with: global(notebooks-selector);
+  @include color-variant(white, #263238);
+  user-select: none;
 }
-.current {
-  compose-with: global(v--full) global(ifrow) global(va--middle);
+.root :global(.dropdown-content) {
+  @include color-variant($theme_color, #263238);
+  line-height: 1.8;
+  min-width: 100%;
+}
+.list {
+  compose-with: global(list) global(list--flat) global(p-x--sm) global(m-y--0);
+}
+.item {
+  cursor: pointer;
 }
 
+.bookIcon {
+  compose-with: global(icon) global(icon-book) global(t--md);
+}
+.bookName {
+  compose-with: global(m-l--sm) global(m-r--xs);
+}
+.triggerIcon {
+  compose-with: global(icon) global(icon-down2) global(t--md);
+  vertical-align: -3px;
+}

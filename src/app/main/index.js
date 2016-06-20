@@ -39,13 +39,12 @@ class Main extends Component {
     );
   }
   render() {
-    const { actions, app, notebooks, notebook, workspace, sources } = this.props;
+    const { actions, app, notebooks, workspace, sources } = this.props;
     return (
       <div className={styles.main}>
         <div className={styles.mainCtrl}>
           <NotebooksSelector
             actions={actions}
-            notebook={notebook}
             notebooks={notebooks.all}
             sources={sources}
             workspace={workspace}
@@ -54,7 +53,6 @@ class Main extends Component {
           <NotebookChaptersCtrl
             className={styles.chaptersCtrl}
             actions={actions}
-            notebook={notebook}
             sources={sources}
             workspace={workspace}
           />
@@ -62,13 +60,11 @@ class Main extends Component {
         <div className={styles.workspace}>
           <NotebookPageEditor
             className={styles.pageEditor}
-            notebook={notebook}
             sources={sources}
             workspace={workspace}
           />
           <NotebookChapterPagesCtrl
             className={styles.pagesCtrl}
-            notebook={notebook}
             sources={sources}
             workspace={workspace}
           />
@@ -85,8 +81,8 @@ class Main extends Component {
 }
 
 function mapStateToProps(state, props) {
-  const { app, notebooks, notebook, workspace, sources } = state;
-  return { app, notebooks, notebook, workspace, sources };
+  const { app, notebooks, workspace, sources } = state;
+  return { app, notebooks, workspace, sources };
 }
 
 function mapDispatchToProps(dispatch, props) {

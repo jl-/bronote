@@ -7,10 +7,11 @@ const initState = {
   editing: null,
 };
 
-function createNotebook(state, notebook) {
-  return { ...state };
+function createNotebookOk(state, notebook) {
+  const all = state.all.concat(notebook.id);
+  return { ...state, all };
 }
-function editNotebook(state, notebook) {
+function updateNotebookOk(state, notebook) {
   return { ...state };
 }
 function fetchNotebooksOk(state, res) {
@@ -20,8 +21,9 @@ function fetchNotebooksOk(state, res) {
 }
 
 const handlersHolder = {
-  [ACTION_TYPES.CREATE_NOTEBOOK]: createNotebook,
-  [ACTION_TYPES.EDIT_NOTEBOOK]: editNotebook,
+  [ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
+
+  [ACTION_TYPES.UPDATE_NOTEBOOK_OK]: updateNotebookOk,
 
   [ACTION_TYPES.FETCH_NOTEBOOKS_OK]: fetchNotebooksOk,
 };
