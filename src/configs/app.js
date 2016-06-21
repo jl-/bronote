@@ -19,3 +19,9 @@ export const TBN_NOTEBOOK = 'Notebook';
 export const TBN_CHAPTER = 'Chapter';
 export const TBN_PAGE = 'Page';
 
+export const THEMES = [
+  { name: 'soft blue', value: '#6facda' },
+  { name: 'desaturated magenta', value: '#cc94c7' },
+  { name: 'moderate cyan', value: '#52b4cb' },
+  { name: 'soft orange', value: '#f49e4b' }
+];

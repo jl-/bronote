@@ -1,4 +1,11 @@
 @import 'styles/configs';
 @import 'styles/mixins';
 .root {
+  compose-with: global(p-y--sm) global(p-x--xs);
+}
+.createBtn {
+  compose-with: global(btn) global(btn--primary) global(btn--sm) global(btn--block);
+}
+.list {
+  compose-with: global(list) global(list--flat) global(p-x--xs);
 }

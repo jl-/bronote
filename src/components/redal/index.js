@@ -123,7 +123,8 @@ class Redal extends Component {
         key={`${props.variant}wrapper`}
         enterTimeout={enterTimeout}
         leaveTimeout={leaveTimeout}
-        close={this.close}>
+        close={this.close}
+      >
         {replaceRedalX(children, this.delegateRedalX)}
       </RedalWrapper>
     );
@@ -131,7 +132,8 @@ class Redal extends Component {
     return (
       <ReactTransitionGroup
         component={component}
-        className={rootClassName}>
+        className={rootClassName}
+      >
         {content}
       </ReactTransitionGroup>
     );

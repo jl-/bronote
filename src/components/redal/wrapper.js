@@ -2,6 +2,7 @@ import React, { Component, Children, createElement, cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import domContains from 'utils/lib/domContains';
+import linkFuncs from 'utils/lib/linkFuncs';
 
 const STATUS_WILL_APPEAR = 1;
 const STATUS_DID_APPEAR = 2;
@@ -16,7 +17,7 @@ class RedalWrapper extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = { status: STATUS_WILL_ENTER };
-    this.handleClick = ::this.handleClick;
+    this.handleMaskClick = ::this.handleMaskClick;
   }
   componentWillAppear(cb) {
     const { willAppear, appearTimeout = 0 } = this.props;
@@ -51,10 +52,14 @@ class RedalWrapper extends Component {
     this.setState({ status: STATUS_DID_LEAVE });
     typeof didLeave === 'function' && setTimeout(() => didLeave(this.refs.inner), 0);
   }
-  handleClick(e) {
-    const { maskToggle = true, handleMaskClick, close } = this.props;
+  handleMaskClick(e) {
+    const { maskToggle = true, handleMaskClick: handler, close } = this.props;
     const inner = ReactDOM.findDOMNode(this.refs[INNER_REF]);
-    const willLeave = typeof handleMaskClick === 'function' ? handleMaskClick(e, inner) : maskToggle && inner !== e.target && !domContains(inner, e.target);
+    const isMaskClicked = !domContains(inner, e.target);
+    if (!isMaskClicked) return;
+
+    const willLeave = typeof handler === 'function' ? handler(e, inner) : maskToggle;
+
     if (willLeave) close();
   }
   render() {
@@ -72,12 +77,14 @@ class RedalWrapper extends Component {
     const inner = child ?
       cloneElement(child, { className: cx(child.props.className, `${variant}-inner`), ref: INNER_REF }) :
       createElement('div', { className: cx(className, `${variant}-inner`), ref: INNER_REF }, children);
+    props.onClick = linkFuncs(props.onClick, this.handleMaskClick);
     return (
-      <div className={cn} {...props} onClick={this.handleClick}>
-        {inner}
+      <div className={cn} {...props}>
+      {inner}
       </div>
     );
   }
 }
 
 export default RedalWrapper;
+

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import styles from './app.scss';
 import Tooltip from 'components/ab-ctrl/tooltip/singleton';
-import GlobalActionBar from './action-bar';
 import {
   openNotebookEditor,
 } from 'modules/notebooks/action-creators/notebooks';
@@ -15,7 +14,6 @@ class App extends Component {
     const content = children ? cloneElement(children, { actions }) : children;
     return (
       <div className={styles.app}>
-        <GlobalActionBar actions={actions} />
         {content}
         <Tooltip />
       </div>

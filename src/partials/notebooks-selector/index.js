@@ -9,9 +9,13 @@ class NotebooksSelector extends Component {
   }
   renderNotebooks(ids, { notebooks }) {
     const itemsList = ids.map(id => {
+      const notebook = notebooks[id];
       return (
         <li key={id} className={styles.item}>
-          {notebooks[id].name}
+          <i className={styles.itemIcon} />
+          <span className={styles.itemName} title={notebook.name}>
+            {notebook.name}
+          </span>
         </li>
       );
     });
@@ -26,8 +30,8 @@ class NotebooksSelector extends Component {
     return (
       <Dropdown {...props}>
         <Dropdown.Trigger className={styles.trigger}>
-          <i className={styles.bookIcon} />
-          <span className={styles.bookName}>{notebook.name}</span>
+          <i className={styles.titleIcon} />
+          <span className={styles.titleName}>{notebook.name}</span>
           <i className={styles.triggerIcon} />
         </Dropdown.Trigger>
         <Dropdown.Content align='bl'>

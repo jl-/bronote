@@ -4,8 +4,10 @@ export default function buildNotebookSchema(schemaBuilder) {
   schemaBuilder.createTable(TBN_NOTEBOOK)
     .addColumn('id', lf.Type.INTEGER)
     .addColumn('name', lf.Type.STRING)
-    .addColumn('created_at', lf.Type.DATE_TIME)
-    .addColumn('updated_at', lf.Type.DATE_TIME)
-    .addNullable(['updated_at'])
+    .addColumn('theme', lf.Type.STRING)
+    .addColumn('order', lf.Type.INTEGER)
+    .addColumn('createdAt', lf.Type.DATE_TIME)
+    .addColumn('updatedAt', lf.Type.DATE_TIME)
+    .addNullable(['updatedAt'])
     .addPrimaryKey(['id'], true);
 }

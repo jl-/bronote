@@ -1,0 +1,15 @@
+@import 'styles/configs';
+@import 'styles/mixins';
+.root {
+  background: transparent;
+}
+.inner {
+  compose-with: global(abs) global(p-y--xs);
+  @include color-variant(black, white);
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+.item {
+  compose-with: global(p-y--xs);
+  cursor: default;
+}

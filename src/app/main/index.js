@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import cx from 'classnames';
+import GlobalActionBar from './action-bar';
 import NotebookEditor from 'partials/notebook-editor';
 import NotebooksSelector from 'partials/notebooks-selector';
 import NotebookChaptersCtrl from './chapters-ctrl';
@@ -13,7 +14,11 @@ import {
   closeNotebookEditor,
   submitNotebook,
   fetchNotebooks,
+  createChapter,
 } from 'modules/notebooks/action-creators/notebooks';
+import {
+  initMain
+} from 'modules/app/action-creators/main';
 
 class Main extends Component {
   constructor(props, context) {
@@ -22,7 +27,7 @@ class Main extends Component {
     this.submitNotebook = ::this.submitNotebook;
   }
   componentDidMount() {
-    this.props.actions.fetchNotebooks();
+    this.props.actions.initMain();
   }
   closeNotebookEditor() {
     this.props.actions.closeNotebookEditor();
@@ -40,35 +45,51 @@ class Main extends Component {
   }
   render() {
     const { actions, app, notebooks, workspace, sources } = this.props;
+    const notebook = sources.notebooks[workspace.notebookId];
+    const chapter = sources.chapters[workspace.chapterId];
+    const rootCtrlEl = notebook && (
+      <div
+        className={styles.rootCtrl}
+        style={{
+          boxShadow: `inset 0 -4px ${chapter && chapter.theme}`
+        }}
+      >
+        <NotebooksSelector
+          actions={actions}
+          notebooks={notebooks.all}
+          sources={sources}
+          workspace={workspace}
+          className={styles.notebooksSelector}
+        />
+        <NotebookChaptersCtrl
+          className={styles.chaptersCtrl}
+          actions={actions}
+          sources={sources}
+          workspace={workspace}
+        />
+      </div>
+    );
+    const workspaceEl = notebook && (
+      <div className={styles.workspace}>
+        <NotebookPageEditor
+          className={styles.pageEditor}
+          actions={actions}
+          sources={sources}
+          workspace={workspace}
+        />
+        <NotebookChapterPagesCtrl
+          className={styles.pagesCtrl}
+          actions={actions}
+          sources={sources}
+          workspace={workspace}
+        />
+      </div>
+    );
     return (
       <div className={styles.main}>
-        <div className={styles.mainCtrl}>
-          <NotebooksSelector
-            actions={actions}
-            notebooks={notebooks.all}
-            sources={sources}
-            workspace={workspace}
-            className={styles.notebooksSelector}
-          />
-          <NotebookChaptersCtrl
-            className={styles.chaptersCtrl}
-            actions={actions}
-            sources={sources}
-            workspace={workspace}
-          />
-        </div>
-        <div className={styles.workspace}>
-          <NotebookPageEditor
-            className={styles.pageEditor}
-            sources={sources}
-            workspace={workspace}
-          />
-          <NotebookChapterPagesCtrl
-            className={styles.pagesCtrl}
-            sources={sources}
-            workspace={workspace}
-          />
-        </div>
+        <GlobalActionBar actions={actions} />
+        {rootCtrlEl}
+        {workspaceEl}
         <NotebookEditor
           notebook={notebooks.editing}
           hidden={!app.notebookEditorShown}
@@ -91,6 +112,8 @@ function mapDispatchToProps(dispatch, props) {
     closeNotebookEditor,
     submitNotebook,
     fetchNotebooks,
+    createChapter,
+    initMain,
   }, dispatch);
 
   return { actions };

@@ -10,20 +10,43 @@
   line-height: 1.8;
   min-width: 100%;
 }
+.icon {
+  compose-with: global(icon) global(dib) global(ta--center) global(t--md);
+  width: 16px;
+}
+
+// dropdown trigger
+.title {
+  &Icon {
+    compose-with: icon global(icon-book);
+    width: 16px;
+  }
+  &Name {
+    compose-with: global(m-l--sm) global(m-r--xs);
+  }
+}
+.trigger {
+  compose-with: global(p-x--sm);
+  &Icon {
+    compose-with: global(icon) global(icon-down2) global(t--md);
+    vertical-align: -3px;
+  }
+}
+
+// dropdown content
 .list {
   compose-with: global(list) global(list--flat) global(p-x--sm) global(m-y--0);
 }
 .item {
+  compose-with: global(frow) global(f-ai-c);
   cursor: pointer;
+  &Icon {
+    compose-with: icon global(icon-book1);
+  }
+  &Name {
+    compose-with: global(m-l--sm) global(m-r--xs) global(to--elli) global(dib);
+    @include w(6em, 12em, 18em);
+
+  }
 }
 
-.bookIcon {
-  compose-with: global(icon) global(icon-book) global(t--md);
-}
-.bookName {
-  compose-with: global(m-l--sm) global(m-r--xs);
-}
-.triggerIcon {
-  compose-with: global(icon) global(icon-down2) global(t--md);
-  vertical-align: -3px;
-}

@@ -39,11 +39,53 @@ export function submitNotebook(notebook) {
   return handler(notebook);
 }
 
-export function fetchNotebooks() {
+export function createChapter(notebookId) {
   return (dispatch, getState) => {
-    dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS });
-    return notebookApi.fetchNotebooks().then(res => {
-      dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS_OK, payload: res });
+    dispatch({ type: ACTION_TYPES.CREATE_CHAPTER });
+    return notebookApi.createChapter(notebookId).then(res => {
+      dispatch({ type: ACTION_TYPES.CREATE_CHAPTER_OK, payload: res });
+      return res;
     });
+  };
+}
+
+export function fetchNotebooks() {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS });
+    const notebooks = await notebookApi.fetchNotebooks();
+    dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOKS_OK, payload: notebooks });
+    return notebooks;
+  };
+}
+export function fetchNotebook(notebookId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOK });
+    const res = await notebookApi.fetchNotebook(notebookId);
+    dispatch({ type: ACTION_TYPES.FETCH_NOTEBOOK_OK, payload: res });
+    return res;
+  };
+}
+export function fetchChapters(notebookId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.FETCH_CHAPTERS });
+    const chapters = await notebookApi.fetchChapters(notebookId);
+    dispatch({ type: ACTION_TYPES.FETCH_CHAPTERS_OK, payload: chapters });
+    return chapters;
+  };
+}
+export function fetchChapter(chapterId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.FETCH_CHAPTER });
+    const res = await notebookApi.fetchChapter(chapterId);
+    dispatch({ type: ACTION_TYPES.FETCH_CHAPTER_OK, payload: res });
+    return res;
+  };
+}
+export function fetchPage(pageId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.FETCH_PAGE });
+    const res = await notebookApi.fetchPage(pageId);
+    dispatch({ type: ACTION_TYPES.FETCH_PAGE_OK, payload: res });
+    return res;
   };
 }

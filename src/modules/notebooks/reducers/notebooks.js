@@ -7,7 +7,7 @@ const initState = {
   editing: null,
 };
 
-function createNotebookOk(state, notebook) {
+function createNotebookOk(state, { notebook }) {
   const all = state.all.concat(notebook.id);
   return { ...state, all };
 }
