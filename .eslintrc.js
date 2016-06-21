@@ -31,6 +31,7 @@ module.exports = {
     'camelcase': 1,
     'quotes': [1, 'single'],
     'no-unused-vars': 1,
+    'no-empty-function': 1,
     'arrow-body-style': [1, 'as-needed'],
     'react/prop-types': 0,
     'react/prefer-stateless-function': 1,
