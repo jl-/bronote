@@ -6,6 +6,8 @@ lang.set('terms', {
   create: 'Create',
   cancel: 'Cancel',
   submit: 'Submit',
+  rename: 'Rename',
+  delete: 'Delete',
   confirm: 'Confirm',
 }).set('app.sections', {
   recent: 'Recent',
@@ -15,6 +17,7 @@ lang.set('terms', {
     createNotebook: 'Create Notebook',
     newNoteIn: 'New Note in ',
     notebookName: 'Notebook Name',
+    addPage: 'Add Page',
   },
 }).set('app.search', {
   phrases: {
