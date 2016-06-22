@@ -15,6 +15,10 @@ import {
   submitNotebook,
   fetchNotebooks,
   createChapter,
+  createPage,
+  setNotebook,
+  setChapter,
+  setPage,
 } from 'modules/notebooks/action-creators/notebooks';
 import {
   initMain
@@ -113,6 +117,10 @@ function mapDispatchToProps(dispatch, props) {
     submitNotebook,
     fetchNotebooks,
     createChapter,
+    createPage,
+    setNotebook,
+    setChapter,
+    setPage,
     initMain,
   }, dispatch);
 

@@ -27,6 +27,10 @@ function createChapterOk(state, { chapter, page }) {
   const pages = mergeItemToHolder({ ...state.pages }, page.id, page);
   return { ...state, chapters, pages };
 }
+function createPageOk(state, page) {
+  const pages = mergeItemToHolder({ ...state.pages }, page.id, page);
+  return { ...state, pages };
+}
 
 function fetchNotebookOk(state, { notebook, chapters: chaptersList }) {
   const notebooks = mergeItemToHolder({ ...state.notebooks }, notebook.id, notebook);
@@ -57,12 +61,13 @@ function fetchPageOk(state, page) {
 
 const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
+  [NOTEBOOK_ACTION_TYPES.CREATE_CHAPTER_OK]: createChapterOk,
+  [NOTEBOOK_ACTION_TYPES.CREATE_PAGE_OK]: createPageOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOKS_OK]: fetchNotebooksOk,
 
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOK_OK]: fetchNotebookOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_CHAPTER_OK]: fetchChapterOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_PAGE_OK]: fetchPageOk,
-  [NOTEBOOK_ACTION_TYPES.CREATE_CHAPTER_OK]: createChapterOk,
 };
 
 function sources(state = initState, action) {

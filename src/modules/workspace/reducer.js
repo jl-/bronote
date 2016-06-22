@@ -23,21 +23,35 @@ function createChapterOk(state, { chapter, page }) {
   const pages = [pageId];
   return { ...state, chapterId, pageId, chapters, pages };
 }
-function fetchNotebookOk(state, { chapters: chaptersList }) {
-  const chapters = chaptersList.map(chapter => chapter.id);
-  return { ...state, chapters };
+function createPageOk(state, page) {
+  const pageId = page.id;
+  const pages = state.pages.concat(pageId);
+  return { ...state, pageId, pages };
 }
-function fetchChapterOk(state, { pages: pagesList }) {
+function fetchNotebookOk(state, { notebook, chapters: chaptersList }) {
+  const notebookId = notebook.id;
+  const chapters = chaptersList.map(chapter => chapter.id);
+  const chapterId = chapters[0];
+  return { ...state, notebookId, chapterId, chapters };
+}
+function fetchChapterOk(state, { chapter, pages: pagesList }) {
   const pages = pagesList.map(page => page.id);
-  return { ...state, pages };
+  const chapterId = chapter.id;
+  const pageId = pages[0];
+  return { ...state, chapterId, pageId, pages };
+}
+function fetchPageOk(state, page) {
+  const pageId = page.id;
+  return { ...state, pageId };
 }
 
 const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
+  [NOTEBOOK_ACTION_TYPES.CREATE_CHAPTER_OK]: createChapterOk,
+  [NOTEBOOK_ACTION_TYPES.CREATE_PAGE_OK]: createPageOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOK_OK]: fetchNotebookOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_CHAPTER_OK]: fetchChapterOk,
-  [NOTEBOOK_ACTION_TYPES.CREATE_CHAPTER_OK]: createChapterOk,
-
+  [NOTEBOOK_ACTION_TYPES.FETCH_PAGE_OK]: fetchPageOk,
 };
 
 function workspace(state = initState, action) {

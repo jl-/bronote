@@ -7,5 +7,13 @@
   compose-with: global(btn) global(btn--primary) global(btn--sm) global(btn--block);
 }
 .list {
-  compose-with: global(list) global(list--flat) global(p-x--xs);
+  compose-with: global(list) global(list--flat) global(p-x--0) global(m-y--xs);
+}
+.item {
+  compose-with: global(p-y--sm) global(t--md);
+  cursor: default;
+  &Active {
+    compose-with: item;
+    background-color: white;
+  }
 }

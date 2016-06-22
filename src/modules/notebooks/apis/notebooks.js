@@ -1,7 +1,6 @@
 import lf from 'lovefield';
 import getDB from 'modules/db';
 import uid from 'utils/lib/uid';
-import syncWorkspace from 'modules/helpers/sync-workspace';
 import {
   TBN_NOTEBOOK, TBN_CHAPTER, TBN_PAGE
 } from 'configs/app';
@@ -22,11 +21,6 @@ export async function createNotebook(data = {}) {
   const [notebook] = await db.insert().into(table).values([row]).exec();
   if (!notebook) throw Error('create notebook failed');
   const { chapter, page } = await createChapter(notebook.id, { name: genChapterName() });
-  syncWorkspace({
-    notebookId: notebook.id,
-    chapterId: chapter.id,
-    pageId: page.id
-  });
   return { notebook, chapter, page };
 }
 
@@ -44,10 +38,6 @@ export async function createChapter(notebookId, data = {}) {
   const [chapter] = await db.insert().into(table).values([row]).exec();
   if (!chapter) throw Error('create notebook chapter failed');
   const page = await createPage(notebookId, chapter.id, { name: genPageName() });
-  syncWorkspace({
-    chapterId: chapter.id,
-    pageId: page.id
-  });
   return { chapter, page };
 }
 
@@ -57,14 +47,12 @@ export async function createPage(notebookId, chapterId, data = {}) {
   const row = table.createRow({
     notebookId, chapterId,
     order: 1,
+    name: genPageName(),
     ...data,
     createdAt: new Date()
   });
   const [page] = await db.insert().into(table).values([row]).exec();
   if (!page) throw Error('create notebook chapter page failed');
-  syncWorkspace({
-    pageId: page.id
-  });
   return page;
 }
 

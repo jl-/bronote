@@ -40,6 +40,10 @@
 .item {
   compose-with: global(frow) global(f-ai-c);
   cursor: pointer;
+  &Content {
+    compose-with: global(frow) global(f-ai-c);
+    @include flex-item(1);
+  }
   &Icon {
     compose-with: icon global(icon-book1);
   }

@@ -1,5 +1,12 @@
 import ACTION_TYPES from '../action-types';
 import * as notebookApi from '../apis/notebooks';
+import {
+  rememberNotebookChapter,
+  rememberChapterPage,
+  recallNotebookChapter,
+  recallChapterPage,
+  syncWorkspace,
+} from 'modules/helpers/sync-workspace';
 export function openNotebookEditor(notebookId) {
   if (notebookId === undefined) {
     return { type: ACTION_TYPES.SHOW_NOTEBOOK_EDITOR };
@@ -12,16 +19,18 @@ export function closeNotebookEditor() {
 }
 
 function createNotebook(notebook) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({ type: ACTION_TYPES.CREATE_NOTEBOOK });
-    return notebookApi.createNotebook(notebook).then(res => {
-      dispatch({ type: ACTION_TYPES.CREATE_NOTEBOOK_OK, payload: res });
-    }, error => {
-      throw error;
+    const res = await notebookApi.createNotebook(notebook);
+    syncWorkspace({
+      notebookId: res.notebook.id,
+      chapterId: res.chapter.id,
+      pageId: res.page.id
     });
+    dispatch({ type: ACTION_TYPES.CREATE_NOTEBOOK_OK, payload: res });
+    return res;
   };
 }
-
 function updateNotebook(notebook) {
   return (dispatch, getState) => {
     dispatch({ type: ACTION_TYPES.UPDATE_NOTEBOOK });
@@ -32,7 +41,6 @@ function updateNotebook(notebook) {
     });
   };
 }
-
 export function submitNotebook(notebook) {
   const isNewCreated = !notebook.id;
   const handler = isNewCreated ? createNotebook : updateNotebook;
@@ -40,12 +48,25 @@ export function submitNotebook(notebook) {
 }
 
 export function createChapter(notebookId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({ type: ACTION_TYPES.CREATE_CHAPTER });
-    return notebookApi.createChapter(notebookId).then(res => {
-      dispatch({ type: ACTION_TYPES.CREATE_CHAPTER_OK, payload: res });
-      return res;
+    const res = await notebookApi.createChapter(notebookId);
+    syncWorkspace({
+      chapterId: res.chapter.id,
+      pageId: res.page.id
     });
+    dispatch({ type: ACTION_TYPES.CREATE_CHAPTER_OK, payload: res });
+    return res;
+  };
+}
+export function createPage(notebookId, chapterId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.CREATE_PAGE });
+    const page = await notebookApi.createPage(notebookId, chapterId);
+    syncWorkspace({ pageId: page.id });
+    rememberChapterPage(chapterId, page.id);
+    dispatch({ type: ACTION_TYPES.CREATE_PAGE_OK, payload: page });
+    return page;
   };
 }
 
@@ -65,14 +86,6 @@ export function fetchNotebook(notebookId) {
     return res;
   };
 }
-export function fetchChapters(notebookId) {
-  return async (dispatch, getState) => {
-    dispatch({ type: ACTION_TYPES.FETCH_CHAPTERS });
-    const chapters = await notebookApi.fetchChapters(notebookId);
-    dispatch({ type: ACTION_TYPES.FETCH_CHAPTERS_OK, payload: chapters });
-    return chapters;
-  };
-}
 export function fetchChapter(chapterId) {
   return async (dispatch, getState) => {
     dispatch({ type: ACTION_TYPES.FETCH_CHAPTER });
@@ -89,3 +102,35 @@ export function fetchPage(pageId) {
     return res;
   };
 }
+
+
+export function setNotebook(notebookId) {
+  return async (dispatch, getState) => {
+    const { notebook, chapters } = await fetchNotebook(notebookId)(dispatch, getState);
+    const chapterId = recallNotebookChapter(notebookId) || (chapters[0] && chapters[0].id);
+    const { chapter, pages } = await fetchChapter(chapterId)(dispatch, getState);
+    const pageId = recallChapterPage(chapterId) || (pages[0] && pages[0].id);
+    const page = await fetchPage(pageId)(dispatch, getState);
+    syncWorkspace({ notebookId, chapterId, pageId });
+    return { notebook, chapters, chapter, pages, page };
+  };
+}
+export function setChapter(chapterId) {
+  return async (dispatch, getState) => {
+    const { chapter, pages } = await fetchChapter(chapterId)(dispatch, getState);
+    const pageId = recallChapterPage(chapterId) || (pages[0] && pages[0].id);
+    const page = await fetchPage(pageId)(dispatch, getState);
+    syncWorkspace({ chapterId, pageId });
+    rememberNotebookChapter(chapter.notebookId, chapterId);
+    return { chapter, pages, page };
+  };
+}
+export function setPage(pageId) {
+  return async (dispatch, getState) => {
+    const page = await fetchPage(pageId)(dispatch, getState);
+    syncWorkspace({ pageId });
+    rememberChapterPage(page.chapterId, pageId);
+    return page;
+  };
+}
+
