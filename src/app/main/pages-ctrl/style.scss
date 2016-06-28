@@ -2,6 +2,7 @@
 @import 'styles/mixins';
 .root {
   compose-with: global(p-y--sm) global(p-x--xs);
+  user-select: none;
 }
 .createBtn {
   compose-with: global(btn) global(btn--primary) global(btn--sm) global(btn--block);
@@ -11,9 +12,10 @@
 }
 .item {
   compose-with: global(p-y--sm) global(t--md);
+  transition: padding-left 0.1s ease;
   cursor: default;
   &Active {
-    compose-with: item;
+    compose-with: item global(p-l--sm) global(fw--bold);
     background-color: white;
   }
 }

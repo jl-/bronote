@@ -43,8 +43,8 @@ $row_height: 1.6rem;
   compose-with: global(frow) global(f-jc-fe) global(f-ai-c) global(m-t--md);
 }
 .cancel {
-  compose-with: global(btn) global(btn--sm) global(m-r--md);
+  compose-with: global(btn) global(btn--default) global(btn--sm) global(m-r--md);
 }
 .confirm {
-  compose-with: global(btn) global(btn--sm);
+  compose-with: global(btn) global(btn--primary) global(btn--sm);
 }

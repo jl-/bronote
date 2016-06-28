@@ -14,12 +14,10 @@ buildPageSchema(schemaBuilder);
 
 let db = null;
 const dbPromise = schemaBuilder.connect(_db => {
-  console.log('connected');
   db = _db;
   return db;
 });
 
 export default async function getDB() {
-  console.log('getDB');
   return db === null ? await dbPromise : db;
 }

@@ -44,6 +44,12 @@ function fetchPageOk(state, page) {
   const pageId = page.id;
   return { ...state, pageId };
 }
+function deletePageOk(state, res) {
+  const idOfDeleted = res.id;
+  const pages = state.pages.filter(id => id !== idOfDeleted);
+  const pageId = state.pageId === idOfDeleted ? pages[0] : state.pageId;
+  return { ...state, pages, pageId };
+}
 
 const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
@@ -52,6 +58,8 @@ const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOK_OK]: fetchNotebookOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_CHAPTER_OK]: fetchChapterOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_PAGE_OK]: fetchPageOk,
+
+  [NOTEBOOK_ACTION_TYPES.DELETE_PAGE_OK]: deletePageOk,
 };
 
 function workspace(state = initState, action) {

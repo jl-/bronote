@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import styles from './style.scss';
 import makeColor from 'color';
+import PageContextMenu from 'partials/page-contextmenu';
 
 const LIST_REF = Symbol('pages list');
 function getPageId(target, root) {
   let pageId;
-  while (target !== root) {
+  while (target && target !== root) {
     pageId = +target.getAttribute('data-pageId');
     if (pageId) return pageId;
-    target = target.parentNode;
+    target = target.parentElement;
   }
 }
 
@@ -18,9 +19,12 @@ class NotebookChapterPagesCtrl extends Component {
   constructor(props, context) {
     super(props, context);
     const { pageId } = props.workspace;
-    this.state = { pageId };
+    this.state = { pageId, contextMenuStyle: null };
     this.createPage = ::this.createPage;
     this.setPage = ::this.setPage;
+    this.openContextMenu = ::this.openContextMenu;
+    this.closeContextMenu = ::this.closeContextMenu;
+    this.deletePage = ::this.deletePage;
   }
   componentWillReceiveProps({ workspace }) {
     const { chapterId, pageId } = workspace;
@@ -29,6 +33,27 @@ class NotebookChapterPagesCtrl extends Component {
       this.setState({ pageId });
     }
   }
+  deletePage(e) {
+    const { contextMenuPageId } = this.state;
+    if (!contextMenuPageId) return;
+    const { actions } = this.props;
+    actions.deletePage(contextMenuPageId);
+    this.closeContextMenu();
+  }
+  openContextMenu(e) {
+    const root = ReactDOM.findDOMNode(this.refs[LIST_REF]);
+    const pageId = getPageId(e.target, root);
+    if (!pageId) return;
+    this.closeContextMenu();
+    const contextMenuStyle = {
+      left: e.pageX,
+      top: e.pageY
+    };
+    this.setState({ contextMenuStyle, contextMenuPageId: pageId });
+  }
+  closeContextMenu() {
+    this.setState({ contextMenuStyle: null, contextMenuPageId: null });
+  }
   createPage() {
     const { actions, workspace } = this.props;
     actions.createPage(workspace.notebookId, workspace.chapterId);
@@ -36,8 +61,9 @@ class NotebookChapterPagesCtrl extends Component {
   setPage({ target }) {
     const root = ReactDOM.findDOMNode(this.refs[LIST_REF]);
     const pageId = getPageId(target, root);
-    if (!pageId) return;
+    if (!pageId || pageId === this.state.pageId) return;
     const { actions } = this.props;
+    this.props.handleChange();
     actions.setPage(pageId);
   }
   renderPages(pages) {
@@ -58,6 +84,7 @@ class NotebookChapterPagesCtrl extends Component {
         ref={LIST_REF}
         className={styles.list}
         onClick={this.setPage}
+        onContextMenu={this.openContextMenu}
       >
         {itemList}
       </ul>
@@ -67,6 +94,7 @@ class NotebookChapterPagesCtrl extends Component {
     const { actions, workspace, sources, ...props } = this.props;
     const pages = workspace.pages.map(id => sources.pages[id]);
     const chapter = sources.chapters[workspace.chapterId];
+    const { contextMenuStyle } = this.state;
     props.className = cx(props.className, styles.root);
     if (chapter) {
       const theme = makeColor(chapter.theme);
@@ -84,6 +112,13 @@ class NotebookChapterPagesCtrl extends Component {
           {__('app.notebooks.phrases.addPage')}
         </button>
         {this.renderPages(pages)}
+        <PageContextMenu
+          hidden={!contextMenuStyle}
+          handleMaskClick={this.closeContextMenu}
+          onContextMenu={this.closeContextMenu}
+          handleDelete={this.deletePage}
+          style={contextMenuStyle}
+        />
       </div>
     );
   }

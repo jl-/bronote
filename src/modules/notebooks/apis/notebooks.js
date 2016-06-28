@@ -23,7 +23,6 @@ export async function createNotebook(data = {}) {
   const { chapter, page } = await createChapter(notebook.id, { name: genChapterName() });
   return { notebook, chapter, page };
 }
-
 export async function createChapter(notebookId, data = {}) {
   const db = await getDB();
   const table = db.getSchema().table(TBN_CHAPTER);
@@ -40,7 +39,6 @@ export async function createChapter(notebookId, data = {}) {
   const page = await createPage(notebookId, chapter.id, { name: genPageName() });
   return { chapter, page };
 }
-
 export async function createPage(notebookId, chapterId, data = {}) {
   const db = await getDB();
   const table = db.getSchema().table(TBN_PAGE);
@@ -58,6 +56,18 @@ export async function createPage(notebookId, chapterId, data = {}) {
 
 export async function updateNotebook(notebook) {
   const db = await getDB();
+}
+export async function updateChapter(chapter) {
+  const db = await getDB();
+}
+export async function updatePage(data) {
+  const db = await getDB();
+  const table = db.getSchema().table(TBN_PAGE);
+  let query = db.update(table).set(table.updatedAt, new Date());
+  data.name && (query = query.set(table.name, data.name));
+  data.content && (query = query.set(table.content, data.content));
+  const [page] = await query.where(table.id.eq(data.id)).exec();
+  return page || data;
 }
 
 export async function fetchNotebooks() {
@@ -122,4 +132,13 @@ export async function fetchPage(pageId) {
     .limit(1)
     .exec();
   return page;
+}
+
+export async function deletePage(pageId) {
+  const db = await getDB();
+  const pageTable = db.getSchema().table(TBN_PAGE);
+  const [page] = await db.delete().from(pageTable)
+    .where(pageTable.id.eq(pageId))
+    .exec();
+  return page || { id: pageId };
 }

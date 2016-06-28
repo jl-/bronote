@@ -27,16 +27,30 @@ function getTargetAction(target, root) {
 class NotebooksSelector extends Component {
   constructor(props, context) {
     super(props, context);
+    const { workspace } = props;
+    this.state = { notebookId: workspace.notebookId };
     this.handleNotebooksListClick = ::this.handleNotebooksListClick;
+  }
+  componentWillReceiveProps({ workspace }) {
+    const { notebookId } = workspace;
+    const { prevNotebookId } = this.props.workspace;
+    if (notebookId === prevNotebookId) return;
+    this.setState({ notebookId });
+  }
+  setNotebook(notebookId) {
+    const { actions, handleChange } = this.props;
+    const { notebookId: prevNotebookId } = this.state;
+    if (notebookId === prevNotebookId) return;
+    if (typeof handleChange === 'function') handleChange(notebookId, prevNotebookId);
+    actions.setNotebook(notebookId);
   }
   handleNotebooksListClick({ target }) {
     const root = ReactDOM.findDOMNode(this.refs[LIST_REF]);
     const action = getTargetAction(target, root);
     if (!action) return;
     const notebookId = getNotebookId(target, root);
-    const { actions } = this.props;
     if (action === ACTION_VIEW) {
-      actions.setNotebook(notebookId);
+      this.setNotebook(notebookId);
     }
   }
   renderNotebooks(ids, { notebooks }) {

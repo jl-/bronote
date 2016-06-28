@@ -5,6 +5,8 @@ import {
   rememberChapterPage,
   recallNotebookChapter,
   recallChapterPage,
+  clearNotebookChapter,
+  clearChapterPage,
   syncWorkspace,
 } from 'modules/helpers/sync-workspace';
 export function openNotebookEditor(notebookId) {
@@ -69,6 +71,14 @@ export function createPage(notebookId, chapterId) {
     return page;
   };
 }
+export function updatePage(data) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.UPDATE_PAGE });
+    const res = await notebookApi.updatePage(data);
+    dispatch({ type: ACTION_TYPES.UPDATE_PAGE_OK, payload: res });
+    return res;
+  };
+}
 
 export function fetchNotebooks() {
   return async (dispatch, getState) => {
@@ -103,7 +113,6 @@ export function fetchPage(pageId) {
   };
 }
 
-
 export function setNotebook(notebookId) {
   return async (dispatch, getState) => {
     const { notebook, chapters } = await fetchNotebook(notebookId)(dispatch, getState);
@@ -131,6 +140,17 @@ export function setPage(pageId) {
     syncWorkspace({ pageId });
     rememberChapterPage(page.chapterId, pageId);
     return page;
+  };
+}
+
+export function deletePage(pageId) {
+  return async (dispatch, getState) => {
+    dispatch({ type: ACTION_TYPES.DELETE_PAGE });
+    const page = await notebookApi.deletePage(pageId);
+    const res = page && page.id ? page : { id: pageId };
+    clearChapterPage(getState().workspace.chapterId);
+    dispatch({ type: ACTION_TYPES.DELETE_PAGE_OK, payload: res });
+    return res;
   };
 }
 

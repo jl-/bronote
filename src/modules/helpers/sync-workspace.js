@@ -10,6 +10,12 @@ export function recallNotebookChapter(notebookId) {
 export function recallChapterPage(chapterId) {
   return localStorage.getItem(`c_p_${chapterId}`);
 }
+export function clearNotebookChapter(notebookId) {
+  localStorage.removeItem(`n_c_${notebookId}`);
+}
+export function clearChapterPage(chapterId) {
+  localStorage.removeItem(`c_p_${chapterId}`);
+}
 
 export function syncWorkspace({
   notebookId, chapterId, pageId

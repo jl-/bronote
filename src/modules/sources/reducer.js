@@ -1,5 +1,6 @@
 import NOTEBOOK_ACTION_TYPES from 'modules/notebooks/action-types';
 import mergeItemToHolder from 'utils/lib/mergeItemToHolder';
+import omitBy from 'lodash/omitBy';
 
 const initState = {
   notebooks: {},
@@ -31,6 +32,18 @@ function createPageOk(state, page) {
   const pages = mergeItemToHolder({ ...state.pages }, page.id, page);
   return { ...state, pages };
 }
+function updateNotebookOk(state, notebook) {
+  const notebooks = mergeItemToHolder({ ...state.notebooks }, notebook.id, notebook);
+  return { ...state, notebooks };
+}
+function updateChapterOk(state, chapter) {
+  const chapters = mergeItemToHolder({ ...state.chapters }, chapter.id, chapter);
+  return { ...state, chapters };
+}
+function updatePageOk(state, page) {
+  const pages = mergeItemToHolder({ ...state.pages }, page.id, page);
+  return { ...state, pages };
+}
 
 function fetchNotebookOk(state, { notebook, chapters: chaptersList }) {
   const notebooks = mergeItemToHolder({ ...state.notebooks }, notebook.id, notebook);
@@ -59,6 +72,12 @@ function fetchPageOk(state, page) {
   return { ...state, pages };
 }
 
+function deletePageOk(state, res) {
+  const idOfDeleted = res.id;
+  const pages = omitBy(state.pages, page => page.id === idOfDeleted);
+  return { ...state, pages };
+}
+
 const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.CREATE_NOTEBOOK_OK]: createNotebookOk,
   [NOTEBOOK_ACTION_TYPES.CREATE_CHAPTER_OK]: createChapterOk,
@@ -68,6 +87,12 @@ const handlersHolder = {
   [NOTEBOOK_ACTION_TYPES.FETCH_NOTEBOOK_OK]: fetchNotebookOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_CHAPTER_OK]: fetchChapterOk,
   [NOTEBOOK_ACTION_TYPES.FETCH_PAGE_OK]: fetchPageOk,
+
+  [NOTEBOOK_ACTION_TYPES.UPDATE_NOTEBOOK_OK]: updateNotebookOk,
+  [NOTEBOOK_ACTION_TYPES.UPDATE_CHAPTER_OK]: updateChapterOk,
+  [NOTEBOOK_ACTION_TYPES.UPDATE_PAGE_OK]: updatePageOk,
+
+  [NOTEBOOK_ACTION_TYPES.DELETE_PAGE_OK]: deletePageOk,
 };
 
 function sources(state = initState, action) {

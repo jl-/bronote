@@ -9,12 +9,12 @@ const LIST_REF = Symbol('chapters list');
 
 function getChapterId(target, wrapper) {
   let chapterId;
-  while (target !== wrapper) {
+  while (target && target !== wrapper) {
     chapterId = target.getAttribute('data-chapterId');
     if (chapterId) {
       break;
     } else {
-      target = target.parentNode;
+      target = target.parentElement;
     }
   }
   return +chapterId;
@@ -46,7 +46,6 @@ class NotebookChaptersCtrl extends Component {
   }
   handleEditHitEnter(e) {
     if (e.keyCode !== 13) return;
-    console.log('bla');
     e.preventDefault();
     this.submitChapterEdit();
   }
@@ -54,8 +53,8 @@ class NotebookChaptersCtrl extends Component {
     const wrapper = ReactDOM.findDOMNode(this.refs[LIST_REF]);
     const chapterId = getChapterId(target, wrapper);
     if (chapterId && chapterId !== this.state.chapterId) {
-      this.setState({ chapterId });
       this.props.actions.setChapter(chapterId);
+      this.props.handleChange();
     }
   }
   editChapter({ target }) {
@@ -77,6 +76,7 @@ class NotebookChaptersCtrl extends Component {
     this.setState({ editing: false });
   }
   openContextMenu(e) {
+    this.closeContextMenu();
     const contextMenuStyle = {
       left: e.pageX,
       top: e.pageY
@@ -94,13 +94,14 @@ class NotebookChaptersCtrl extends Component {
     const { chapterId, editing } = this.state;
     const itemList = chapters.map(chapter => {
       const theme = makeColor(chapter.theme);
-      const backgroundColor = chapter.id === current ? theme.hexString() : theme.lighten(0.2).hexString();
+      const isCurrent = chapter.id === current;
+      const backgroundColor = isCurrent ? theme.hexString() : theme.lighten(0.2).hexString();
       const color = theme.darken(0.8).hexString();
       const isEditing = chapterId === chapter.id && editing;
       return (
         <li
           key={chapter.id}
-          className={styles.item}
+          className={isCurrent ? styles.itemActive : styles.item}
           style={{ backgroundColor, color }}
           data-chapterId={chapter.id}
           contentEditable={isEditing ? true : undefined}

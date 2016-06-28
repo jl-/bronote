@@ -1,4 +1,7 @@
 import React from 'react';
+// import whyDidYouUpdate from 'why-did-you-update';
+// whyDidYouUpdate(React);
+
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import Router from 'react-router/lib/Router';
@@ -10,6 +13,9 @@ import createRoutes from './core/create-routes';
 import './app.entry.scss';
 
 import DevTools from './devtools';
+
+import ReactPerf from 'react-addons-perf';
+window.ReactPerf = ReactPerf;
 
 const initialState = window && window.__INITIAL_STATE__;
 const store = createStore(reducer, initialState);

@@ -1,4 +1,6 @@
+@import 'styles/configs';
 @import 'styles/mixins';
+$title-editor_height: 2.4rem;
 .main {
   compose-with: global(rel) global(h--full) global(v--full) global(x--clip) global(y--clip);
   // height: calc(100% - #{$global-action-bar_height});
@@ -21,14 +23,43 @@
   compose-with: global(h--full) global(frow) global(f-jc-sb) global(f-ai-s) global(rel);
   height: calc(100% - #{$global-action-bar_height} - #{$main__root-ctrl_height});
 }
-.pageEditor {
-  compose-with: global(v--full);
-  @include flex-item(4);
-}
 .pagesCtrl {
   compose-with: global(v--full);
   @include flex-item(1);
   //background-image: linear-gradient(to right, rgb(245,245,245), rgb(214,212,214));
   @include color-variant(null, lighten($grey--light, 9%));
+}
+
+.pageEditor {
+  @include flex-item(4);
+}
+
+.pageEditor :global {
+  .paper-input {
+    @include flex-box($align-items: center);
+    @include row($title-editor_height);
+    padding-bottom: 0;
+    .paper-input-field {
+      display: inline-block;
+      @include flex-item(1);
+    }
+    .paper-input-info {
+      position: static;
+      padding-left: 0.8em;
+      padding-right: 0.8em;
+    }
+    &--invalid .paper-input-field {
+      color: $brand--danger !important;
+    }
+  }
+}
+.pageContentEditor {
+  height: calc(100% - #{$title-editor_height});
+}
+
+.titleInput:global(.paper-input-field) {
+  font-size: 90%;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
 }
 

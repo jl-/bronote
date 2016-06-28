@@ -4,7 +4,7 @@
   compose-with: global(m-y--0) global(p-x--xs) global(v--full) global(h--full) global(frow) global(f-ai-fe) global(x--auto) global(f-fw-nw);
 }
 .list {
-  compose-with: global(list) global(list--flat) global(list--row) global(m-y--0) global(p-x--0) global(x--auto);
+  compose-with: global(list) global(list--flat) global(frow) global(f-ai-fe) global(m-y--0) global(p-x--0) global(x--auto);
   white-space: nowrap;
   &::-webkit-scrollbar {
     display: none;
@@ -21,6 +21,13 @@
   }
   &:focus {
     outline: none;
+  }
+  &Active {
+    compose-with: item;
+  }
+  &Active#{&} {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 .input {

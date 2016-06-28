@@ -9,6 +9,7 @@ import PaperFormControl from '../form-control';
 import STATUS from '../status';
 import './style.scss';
 import uid from '../../../../utils/lib/uid';
+import linkFuncs from 'utils/lib/linkFuncs';
 
 const FIELD_REF = Symbol('field');
 
@@ -36,7 +37,7 @@ class PaperInput extends PaperFormControl {
     if (e) e.preventDefault();
   }
   render() {
-    const { type, label, hint, placeholder, withUnderline = true, className, validator, trigger, prefix, suffix, ...props } = this.props;
+    const { type = 'text', label, hint, placeholder, withUnderline = true, className, validator, trigger, prefix, suffix, onChange, ...props } = this.props;
     const { status, error } = this.state;
     const labelEl = label ? <label className='paper-input-label'>{label}</label> : null;
     const hintEl = hint || error ? <span className='paper-input-info'>{error || hint}</span> : null;
@@ -44,13 +45,14 @@ class PaperInput extends PaperFormControl {
     const rich = !!(prefix || suffix);
     const border = rich ? <span className='paper-input-border'></span> : null;
     if (!labelEl) props.placeholder = placeholder;
+    const changeHandler = typeof onChange === 'function' ? linkFuncs(onChange, this.handleChange) : this.handleChange;
     const input = (
       <input
         {...props}
         type={type}
         ref={FIELD_REF}
         className={cx(className, 'paper-input-field')}
-        onChange={this.handleChange}
+        onChange={changeHandler}
       />
     );
     return (
