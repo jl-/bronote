@@ -25,6 +25,7 @@ lang.set('terms', {
   },
 }).set('errors', {
   NOTEBOOK_NAME_INVALID: 'notebook name at least 3 characters',
+  PAGE_TITLE_INVALID: 'Page Title Invalid'
 });
 
 export const kvs = lang.flatten();
